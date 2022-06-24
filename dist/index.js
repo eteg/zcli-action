@@ -17524,7 +17524,7 @@ async function run() {
     await exec.exec(`zcli apps:validate ${path}`)
     
     console.log(shell.ls(path))
-    console.log(shell.ls('-LA'))
+    console.log(shell.cat('apps/zendesk/dist/zcli.apps.config.json'))
 
     shell.echo(`🚀 Deploying the application...`);
     await exec.exec(`zcli apps:update ${path}`)
