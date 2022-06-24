@@ -4,7 +4,7 @@ Github Action to deploy Zendesk Apps using ZCLI.
 
 ## :clipboard: Table of contents
 
-- [Installation]()
+- [Installation](#installation)
 - [Usage]()
 - [Change the Action]()
 - [Change the Code]()
