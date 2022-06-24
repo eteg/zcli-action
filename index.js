@@ -7,6 +7,8 @@ async function run() {
   try {
     const dateTime = (new Date()).toLocaleString('pt-BR');
 
+    const path = './apps/zendesk/dist'
+
     const { 
       ref,
       eventName
@@ -28,16 +30,14 @@ async function run() {
     await exec.exec('npm install yarn --location=global')
     await exec.exec('npm install typescript --location=global')
    
-    console.log(shell.pwd())
-    
     shell.echo(`🔎 Building & Validating...`);
     await exec.exec('yarn install')
-    await exec.exec(`yarn build:${env}`)
-    await exec.exec('zcli apps:validate apps/zendesk/dist')
+    await exec.exec(`yarn --cwd ${path} build:${env}`)
+    await exec.exec(`zcli apps:validate ${path}`)
 
     
     shell.echo(`🚀 Deploying the application...`);
-    await exec.exec('zcli apps:update dist')
+    await exec.exec(`zcli apps:update ${path}`)
 
     shell.echo(`🎉 Job has been finished`);
 
