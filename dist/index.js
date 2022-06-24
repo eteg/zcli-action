@@ -17523,6 +17523,9 @@ async function run() {
     await exec.exec(`yarn --cwd ${path} build:${env}`)
     await exec.exec(`zcli apps:validate ${path}`)
     
+    console.log(shell.ls(path))
+    console.log(shell.ls('-LA'))
+
     shell.echo(`🚀 Deploying the application...`);
     await exec.exec(`zcli apps:update ${path}`)
 
