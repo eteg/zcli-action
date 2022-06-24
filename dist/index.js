@@ -17509,6 +17509,8 @@ async function run() {
     const env = core.getInput('env')
 
     shell.cat(`${path}/zcli.apps.config.json`)
+    console.log(shell.ls(path))
+    console.log(shell.pwd())
 
     shell.echo(`💡 Job started at ${dateTime}`);
     shell.echo(`🖥️ Job was automatically triggered by ${eventName} event`);
