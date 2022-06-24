@@ -17508,7 +17508,7 @@ async function run() {
 
     const env = core.getInput('env')
 
-    console.log(process.env.ZENDESK_SUBDOMAIN)
+    shell.cat(`${path}/zcli.apps.config.json`)
 
     shell.echo(`💡 Job started at ${dateTime}`);
     shell.echo(`🖥️ Job was automatically triggered by ${eventName} event`);
