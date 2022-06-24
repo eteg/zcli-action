@@ -31,7 +31,7 @@ async function run() {
     shell.echo(`🔎 Building & Validating...`);
     await exec.exec('yarn install')
     await exec.exec(`yarn build:${env}`)
-    await exec.exec('zcli apps:validate dist')
+    await exec.exec('zcli apps:validate apps/zendesk/dist')
 
     shell.echo(`🚀 Deploying the application...`);
     await exec.exec('zcli apps:update dist')
