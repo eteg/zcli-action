@@ -1,5 +1,10 @@
 name: zcli-action
 description: Github Action to deploy Zendesk Apps using ZCLI.
+inputs:
+  env:
+    description: "Environment"
+    required: true
+    default: "dev"
 runs:
   using: "node16"
   main: "dist/index.js"

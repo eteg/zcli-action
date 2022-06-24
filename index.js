@@ -16,6 +16,8 @@ async function run() {
       repository
     } = github.context.payload
 
+    const env = core.getInput('env')
+
     shell.echo(`💡 Job started at ${dateTime}`);
     shell.echo(`🖥️ Job was automatically triggered by ${eventName} event`);
     shell.echo(`🔎 The name of your branch is ${ref} and your repository is ${repository.name}.`)
@@ -28,7 +30,7 @@ async function run() {
     
     shell.echo(`🔎 Building & Validating...`);
     await exec.exec('yarn install')
-    await exec.exec('yarn build')
+    await exec.exec(`yarn build ${env}`)
     await exec.exec('zcli apps:validate dist')
 
     shell.echo(`🚀 Deploying the application...`);
