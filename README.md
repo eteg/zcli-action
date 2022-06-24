@@ -4,7 +4,7 @@ Github Action to deploy Zendesk Apps using ZCLI.
 
 ## :clipboard: Table of contents
 
-- [Installation](#installation)
+- [Installation]()
 - [Usage]()
 - [Change the Action]()
 - [Change the Code]()
@@ -17,13 +17,13 @@ Github Action to deploy Zendesk Apps using ZCLI.
 Install the dependencies
 
 ```bash
-npm install
+yarn install
 ```
 
 Run the tests :heavy_check_mark:
 
 ```bash
-$ npm test
+$ yarn test
 
  PASS  ./index.test.js
   ✓ test runs (95ms)
@@ -114,7 +114,7 @@ Actions are run from GitHub repos.  Packaging the action will create a packaged 
 Run prepare
 
 ```bash
-npm run prepare
+yarn run prepare
 ```
 
 Since the packaged index.js is run from the dist folder.
