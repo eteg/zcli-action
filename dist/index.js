@@ -17495,7 +17495,7 @@ async function run() {
   try {
     const dateTime = (new Date()).toLocaleString('pt-BR');
 
-    const path = shell.pwd() + '/apps/zendesk/dist'
+    const path = 'apps/zendesk/dist'
 
     const { 
       ref,
@@ -17507,11 +17507,6 @@ async function run() {
     } = github.context.payload
 
     const env = core.getInput('env')
-
-    console.log('logggg')
-    shell.cat(`${path}/zcli.apps.config.json`)
-    console.log(shell.ls())
-    console.log(shell.pwd())
 
     shell.echo(`💡 Job started at ${dateTime}`);
     shell.echo(`🖥️ Job was automatically triggered by ${eventName} event`);
