@@ -20,6 +20,8 @@ async function run() {
 
     const env = core.getInput('env')
 
+    console.log(process.env.ZENDESK_SUBDOMAIN)
+
     shell.echo(`💡 Job started at ${dateTime}`);
     shell.echo(`🖥️ Job was automatically triggered by ${eventName} event`);
     shell.echo(`🔎 The name of your branch is ${ref} and your repository is ${repository.name}.`)
@@ -34,7 +36,6 @@ async function run() {
     await exec.exec('yarn install')
     await exec.exec(`yarn --cwd ${path} build:${env}`)
     await exec.exec(`zcli apps:validate ${path}`)
-
     
     shell.echo(`🚀 Deploying the application...`);
     await exec.exec(`zcli apps:update ${path}`)
