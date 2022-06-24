@@ -7,7 +7,7 @@ async function run() {
   try {
     const dateTime = (new Date()).toLocaleString('pt-BR');
 
-    const path = './apps/zendesk/dist'
+    const path = shell.pwd() + '/apps/zendesk/dist'
 
     const { 
       ref,
@@ -20,8 +20,9 @@ async function run() {
 
     const env = core.getInput('env')
 
+    console.log('logggg')
     shell.cat(`${path}/zcli.apps.config.json`)
-    console.log(shell.ls(path))
+    console.log(shell.ls())
     console.log(shell.pwd())
 
     shell.echo(`💡 Job started at ${dateTime}`);
