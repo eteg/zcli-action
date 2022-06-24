@@ -35,6 +35,7 @@ async function run() {
     //await exec.exec('zcli apps:update dist')
 
     shell.echo(`🎉 Job has been finished`);
+
   } catch (error) {
     core.setFailed(error.message);
   }
