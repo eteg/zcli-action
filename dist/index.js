@@ -17504,6 +17504,8 @@ async function run() {
       repository
     } = github.context.payload
 
+    const env = core.getInput('env')
+
     shell.echo(`💡 Job started at ${dateTime}`);
     shell.echo(`🖥️ Job was automatically triggered by ${eventName} event`);
     shell.echo(`🔎 The name of your branch is ${ref} and your repository is ${repository.name}.`)
@@ -17513,14 +17515,17 @@ async function run() {
     await exec.exec('npm install @zendesk/zcli --location=global')
     await exec.exec('npm install yarn --location=global')
     await exec.exec('npm install typescript --location=global')
+   
+    console.log(shell.pwd())
     
     shell.echo(`🔎 Building & Validating...`);
     await exec.exec('yarn install')
-    await exec.exec('yarn build')
-    await exec.exec('zcli apps:validate dist')
+    await exec.exec(`yarn build:${env}`)
+    await exec.exec('zcli apps:validate apps/zendesk/dist')
 
+    
     shell.echo(`🚀 Deploying the application...`);
-    //await exec.exec('zcli apps:update dist')
+    await exec.exec('zcli apps:update dist')
 
     shell.echo(`🎉 Job has been finished`);
 

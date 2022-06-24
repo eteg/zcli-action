@@ -27,12 +27,15 @@ async function run() {
     await exec.exec('npm install @zendesk/zcli --location=global')
     await exec.exec('npm install yarn --location=global')
     await exec.exec('npm install typescript --location=global')
+   
+    console.log(shell.pwd())
     
     shell.echo(`🔎 Building & Validating...`);
     await exec.exec('yarn install')
     await exec.exec(`yarn build:${env}`)
     await exec.exec('zcli apps:validate apps/zendesk/dist')
 
+    
     shell.echo(`🚀 Deploying the application...`);
     await exec.exec('zcli apps:update dist')
 
