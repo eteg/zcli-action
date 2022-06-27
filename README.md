@@ -34,7 +34,7 @@ $ yarn test
 
 The action.yml defines the inputs and output for your action.
 
-Update the action.yml with your name, description, inputs and outputs for your action.
+Update the action.yml and index.js if you want to make changes to the action.
 
 ## :keyboard: Change the Code
 
@@ -58,7 +58,7 @@ run()
 
 ## :rocket: Usage
 
-You can now consume the action by referencing the v1 branch
+You can now consume the action by referencing the release branch, e.g.: `@v1`
 
 ```yaml
 uses: eteg/zcli-action@v1
@@ -80,7 +80,6 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
-        working-directory: [./apps/zendesk]
 
     env:
       ZENDESK_SUBDOMAIN: ${{ secrets.ZENDESK_SUBDOMAIN_DEV }}
@@ -99,19 +98,22 @@ jobs:
           cache-dependency-path: "./yarn.lock"
 
       - name: Setup ZCLI
-        uses: augustobritodev/zen-action@v1
-
+        uses: eteg/zcli-action@v1
+        with:
+          env: "dev"
 ```
 
 > NOTE: You must setup env variables in [Github Action Secrets](https://github.com/eteg/conectview/settings/secrets/actions_)
+
+> NOTE: Don't forget to add `env` in `Setup ZCLI`, the env must be exactly `dev` or `prod`.
 
 ## :envelope: Package for distribution
 
 GitHub Actions will run the entry point from the action.yml. Packaging assembles the code into one file that can be checked in to Git, enabling fast and reliable execution and preventing the need to check in node_modules.
 
-Actions are run from GitHub repos.  Packaging the action will create a packaged action in the dist folder.
+Actions are run from GitHub repos. Packaging the action will create a packaged action in the dist folder.
 
-Run prepare
+Run prepare for distribution
 
 ```bash
 yarn run prepare
@@ -139,7 +141,6 @@ git push origin v1
 ```
 
 Your action is now published! :rocket:
-
 
 ## :scroll: License
 

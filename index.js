@@ -20,6 +20,10 @@ async function run() {
 
     const env = core.getInput('env')
 
+    if (env != 'dev' || env != 'prod') {
+      throw new Error('Environment input must be dev or prod.')
+    }
+
     shell.echo(`💡 Job started at ${dateTime}`);
     shell.echo(`🖥️ Job was automatically triggered by ${eventName} event`);
     shell.echo(`🔎 The name of your branch is ${ref} and your repository is ${repository.name}.`)
@@ -46,7 +50,7 @@ async function run() {
   } catch (error) {
     core.setFailed(error.message);
   }
-}
+} 
 
 
 run();
