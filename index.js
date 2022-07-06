@@ -20,7 +20,7 @@ async function run() {
 
     const env = core.getInput('env')
 
-    if (env != 'dev' || env != 'prod') {
+    if (env !== 'dev' && env !== 'prod') {
       throw new Error('Environment input must be dev or prod.')
     }
 
