@@ -17508,13 +17508,20 @@ async function run() {
 
     const env = core.getInput('env')
 
+<<<<<<< HEAD
+=======
+    if (env !== 'dev' && env !== 'prod') {
+      throw new Error('Environment input must be dev or prod.')
+    }
+
+>>>>>>> v1
     shell.echo(`💡 Job started at ${dateTime}`);
     shell.echo(`🖥️ Job was automatically triggered by ${eventName} event`);
     shell.echo(`🔎 The name of your branch is ${ref} and your repository is ${repository.name}.`)
     
     shell.echo(`🐧 Setting up the environment...`);
 
-    await exec.exec('npm install @zendesk/zcli --location=global')
+    await exec.exec('npm install @zendesk/zcli@v1.0.0-beta.16 --location=global')
     await exec.exec('npm install yarn --location=global')
     await exec.exec('npm install typescript --location=global')
    
@@ -17534,7 +17541,7 @@ async function run() {
   } catch (error) {
     core.setFailed(error.message);
   }
-}
+} 
 
 
 run();
