@@ -5,6 +5,10 @@ inputs:
     description: "Environment"
     required: true
     default: "dev"
+  path:
+    description: "Path to dist directory"
+    required: true
+    default: "apps/zendesk/dist"
 runs:
   using: "node16"
   main: "dist/index.js"
