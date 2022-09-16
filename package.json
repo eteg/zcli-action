@@ -1,6 +1,6 @@
 {
   "name": "zcli-action",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Github Action to deploy Zendesk Apps using ZCLI.",
   "main": "index.js",
   "scripts": {
