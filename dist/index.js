@@ -18190,7 +18190,7 @@ async function run() {
     
     if(fs.existsSync(`${path}/zcli.apps.config.json`)) {
       shell.echo(`🚀 Deploying an existing application...`);
-      await exec.exec(`zcli apps:validate ${path}`);     
+      // await exec.exec(`zcli apps:validate ${path}`);     
       await exec.exec(`zcli apps:update ${path}`);
     }
     else {
