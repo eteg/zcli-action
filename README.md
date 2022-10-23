@@ -1,4 +1,4 @@
-# Conectme
+# ZCLI Action
 
 Github Action to deploy Zendesk Apps using ZCLI.
 
@@ -67,24 +67,26 @@ uses: eteg/zcli-action@v1
 This is a complete example of the action usage for development purposes.:
 
 ```yaml
-name: zcli-action-dev
+name: zcli-action
 
 on:
-  push:
-    branches: ["develop"]
+  pull_request:
+    branches:
+      - main
+      - develop
+    types: [closed]
 
 jobs:
-  build:
+  deploy:
+    if: github.event.pull_request.merged == true
+
     runs-on: ubuntu-latest
+
+    environment: ${{github.ref_name == 'main' && 'production' || 'staging'}
 
     strategy:
       matrix:
         node-version: [16.x]
-
-    env:
-      ZENDESK_SUBDOMAIN: ${{ secrets.ZENDESK_SUBDOMAIN_DEV }}
-      ZENDESK_EMAIL: ${{ secrets.ZENDESK_EMAIL_DEV }}
-      ZENDESK_API_TOKEN: ${{ secrets.ZENDESK_API_TOKEN_DEV }}
 
     steps:
       - name: Setup Checkout
@@ -98,14 +100,11 @@ jobs:
           cache-dependency-path: "./yarn.lock"
 
       - name: Setup ZCLI
-        uses: eteg/zcli-action@v1
-        with:
-          env: "dev"
+        uses: eteg/zcli-action@v1.1.2
+
 ```
 
-> NOTE: You must setup env variables in [Github Action Secrets](https://github.com/eteg/conectview/settings/secrets/actions_)
-
-> NOTE: Don't forget to add `env` in `Setup ZCLI`, the env must be exactly `dev` or `prod`.
+> NOTE: You must setup env variables in `Settings > Environments`
 
 ## :envelope: Package for distribution
 
