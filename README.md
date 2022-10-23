@@ -101,7 +101,8 @@ jobs:
 
       - name: Setup ZCLI
         uses: eteg/zcli-action@v1.1.2
-
+        with:
+          env: ${{github.ref_name == 'main' && 'production' || 'staging'}
 ```
 
 > NOTE: You must setup env variables in `Settings > Environments`
