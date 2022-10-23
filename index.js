@@ -20,8 +20,13 @@ async function run() {
     const env = core.getInput('env');
     const path = core.getInput('path');
 
+<<<<<<< HEAD
     if (env !== 'dev' && env !== 'prod') {
       throw new Error('Environment input must be dev or prod.');
+=======
+    if (env !== 'production' && env !== 'staging') {
+      throw new Error('Environment input must be production or staging.');
+>>>>>>> v1.1.2
     }
 
     shell.echo(`💡 Job started at ${dateTime}`);
@@ -30,7 +35,11 @@ async function run() {
     
     shell.echo(`🐧 Setting up the environment...`);
 
+<<<<<<< HEAD
     await exec.exec('npm install @zendesk/zcli@v1.0.0-beta.16 --location=global');
+=======
+    await exec.exec('npm install @zendesk/zcli@v1.0.0-beta.24 --location=global');
+>>>>>>> v1.1.2
     await exec.exec('npm install yarn --location=global');
     await exec.exec('npm install typescript --location=global');
    
@@ -40,7 +49,11 @@ async function run() {
     
     if(fs.existsSync(`${path}/zcli.apps.config.json`)) {
       shell.echo(`🚀 Deploying an existing application...`);
+<<<<<<< HEAD
       await exec.exec(`zcli apps:validate ${path}`);     
+=======
+      // await exec.exec(`zcli apps:validate ${path}`);     
+>>>>>>> v1.1.2
       await exec.exec(`zcli apps:update ${path}`);
     }
     else {
