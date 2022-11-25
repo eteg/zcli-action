@@ -10988,6 +10988,7 @@ const github = __nccwpck_require__(9939);
 const exec = __nccwpck_require__(5082);
 const fs = __nccwpck_require__(3292)
 
+// eslint-disable-next-line no-unused-vars
 const fileExists = async path => !!(await fs.stat(path).catch(err => false));
 
 async function run() {

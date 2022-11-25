@@ -3,6 +3,7 @@ const github = require('@actions/github');
 const exec = require('@actions/exec');
 const fs = require('fs/promises')
 
+// eslint-disable-next-line no-unused-vars
 const fileExists = async path => !!(await fs.stat(path).catch(err => false));
 
 async function run() {
