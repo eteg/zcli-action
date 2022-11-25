@@ -26,12 +26,6 @@ async function run() {
       throw new Error('Environment input must be provided (production and staging).');
     }
 
-    const exists = await fileExists(`${path}/zcli.apps.config.json`)
-
-    if(!exists) {
-      throw new Error('zcli.apps.config.json not found.');
-    }
-
     await exec.exec(`echo 💡 Job started at ${dateTime}`);
     await exec.exec(`echo 🖥️ Job was automatically triggered by ${eventName} event`);
     await exec.exec(`echo 🔎 The name of your branch is ${ref} and your repository is ${repository.name}.`);
@@ -42,12 +36,17 @@ async function run() {
     await exec.exec('pnpm add typescript -g');
    
     await exec.exec(`🔎 Building & Validating...`);
-    await exec.exec('yarn install');
-    await exec.exec(`yarn --cwd ${path} build`);
+    await exec.exec('pnpm install');
+    await exec.exec(`pnpm build`);
+
+    const exists = await fileExists(`${path}/zcli.apps.config.json`)
+
+    if(!exists) {
+      throw new Error('zcli.apps.config.json not found.');
+    }
     
     await exec.exec(`🚀 Updating an existing application...`);
     await exec.exec(`zcli apps:update ${path}`);
-    await exec.exec(`🚀 Creating a new application...`);
     
     exec.exec(`🎉 Job has been finished`);
 
