@@ -11015,12 +11015,12 @@ async function run() {
     await exec.exec(`echo 🖥️ Job was automatically triggered by ${eventName} event`);
     await exec.exec(`echo 🔎 The name of your branch is ${ref} and your repository is ${repository.name}.`);
     
-    await exec.exec(`🐧 Setting up the environment...`);
+    await exec.exec(`echo 🐧 Setting up the environment...`);
 
     await exec.exec('pnpm add @zendesk/zcli -g');
     await exec.exec('pnpm add typescript -g');
    
-    await exec.exec(`🔎 Building & Validating...`);
+    await exec.exec(`echo 🔎 Building & Validating...`);
     await exec.exec('pnpm install');
     await exec.exec(`pnpm build`);
 
@@ -11030,10 +11030,10 @@ async function run() {
       throw new Error('zcli.apps.config.json not found.');
     }
     
-    await exec.exec(`🚀 Updating an existing application...`);
+    await exec.exec(`echo 🚀 Updating an existing application...`);
     await exec.exec(`zcli apps:update ${path}`);
     
-    exec.exec(`🎉 Job has been finished`);
+    exec.exec(`echo 🎉 Job has been finished`);
 
   } catch (error) {
     core.setFailed(error.message);
