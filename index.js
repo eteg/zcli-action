@@ -1,8 +1,9 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const exec = require('@actions/exec');
-const shell = require('shelljs');
-const fs = require('fs');
+const fs = require('fs/promises')
+
+const fileExists = async path => !!(await fs.stat(path).catch(err => false));
 
 async function run() {
   try {
@@ -17,43 +18,41 @@ async function run() {
       repository
     } = github.context.payload;
 
-    const env = core.getInput('env');
+    const environment = core.getInput('environment');
     const path = core.getInput('path');
 
-    if (env !== 'production' && env !== 'staging') {
-      throw new Error('Environment input must be production or staging.');
+    if (environment !== 'production' && environment !== 'staging') {
+      throw new Error('Environment input must be provided (production and staging).');
     }
 
-    shell.echo(`💡 Job started at ${dateTime}`);
-    shell.echo(`🖥️ Job was automatically triggered by ${eventName} event`);
-    shell.echo(`🔎 The name of your branch is ${ref} and your repository is ${repository.name}.`);
-    
-    shell.echo(`🐧 Setting up the environment...`);
+    const exists = await fileExists(`${path}/zcli.apps.config.json`)
 
-    await exec.exec('npm install @zendesk/zcli@v1.0.0-beta.24 --location=global');
-    await exec.exec('npm install yarn --location=global');
-    await exec.exec('npm install typescript --location=global');
+    if(!exists) {
+      throw new Error('zcli.apps.config.json not found.');
+    }
+
+    await exec.exec(`echo 💡 Job started at ${dateTime}`);
+    await exec.exec(`echo 🖥️ Job was automatically triggered by ${eventName} event`);
+    await exec.exec(`echo 🔎 The name of your branch is ${ref} and your repository is ${repository.name}.`);
+    
+    await exec.exec(`🐧 Setting up the environment...`);
+
+    await exec.exec('pnpm add @zendesk/zcli -g');
+    await exec.exec('pnpm add typescript -g');
    
-    shell.echo(`🔎 Building & Validating...`);
+    await exec.exec(`🔎 Building & Validating...`);
     await exec.exec('yarn install');
-    await exec.exec(`yarn --cwd ${path} build:${env}`);
+    await exec.exec(`yarn --cwd ${path} build`);
     
-    if(fs.existsSync(`${path}/zcli.apps.config.json`)) {
-      shell.echo(`🚀 Deploying an existing application...`);
-      // await exec.exec(`zcli apps:validate ${path}`);     
-      await exec.exec(`zcli apps:update ${path}`);
-    }
-    else {
-      shell.echo(`🚀 Deploying a new application...`);
-      await exec.exec(`zcli apps:create ${path}`);
-    }
-
-    shell.echo(`🎉 Job has been finished`);
+    await exec.exec(`🚀 Updating an existing application...`);
+    await exec.exec(`zcli apps:update ${path}`);
+    await exec.exec(`🚀 Creating a new application...`);
+    
+    exec.exec(`🎉 Job has been finished`);
 
   } catch (error) {
     core.setFailed(error.message);
   }
 } 
-
 
 run();
