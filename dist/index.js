@@ -11004,8 +11004,8 @@ async function run() {
       repository
     } = github.context.payload;
 
-    const environment = core.getInput('environment');
-    const path = core.getInput('path');
+    const environment = core.getInput('ENVIRONMENT');
+    const path = core.getInput('PATH');
 
     if (environment !== 'production' && environment !== 'staging') {
       throw new Error('Environment input must be provided (production and staging).');
