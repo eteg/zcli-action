@@ -11007,8 +11007,8 @@ async function run() {
     const environment = core.getInput('ENVIRONMENT');
     const path = core.getInput('PATH');
 
-    if (environment !== 'production' || environment !== 'staging') {
-      throw new Error('Environment input must be provided (production and staging).');
+    if (environment !== 'production' && environment !== 'staging') {
+      throw new Error('Environment input must be provided (production or staging).');
     }
 
     await exec.exec(`echo 💡 Job started at ${dateTime}`);
