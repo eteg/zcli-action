@@ -1,6 +1,6 @@
 {
   "name": "zcli-action",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Github Action to deploy Zendesk Apps using ZCLI.",
   "main": "index.js",
   "scripts": {
@@ -8,6 +8,10 @@
     "prepare": "ncc build index.js -o dist --source-map --license licenses.txt",
     "test": "jest",
     "all": "npm run lint && npm run prepare && npm run test"
+  },
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=7"
   },
   "repository": {
     "type": "git",
@@ -27,8 +31,7 @@
   "dependencies": {
     "@actions/core": "^1.9.1",
     "@actions/exec": "^1.1.1",
-    "@actions/github": "^5.0.3",
-    "shelljs": "^0.8.5"
+    "@actions/github": "^5.0.3"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.34.0",

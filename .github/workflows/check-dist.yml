@@ -10,10 +10,10 @@ on:
     branches:
       - main
     paths-ignore:
-      - '**.md'
+      - "**.md"
   pull_request:
     paths-ignore:
-      - '**.md'
+      - "**.md"
   workflow_dispatch:
 
 jobs:
@@ -21,18 +21,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout the code
+        uses: actions/checkout@v3
 
-      - name: Set Node.js 16.x
-        uses: actions/setup-node@v2.5.1
+      - name: Setup node version from .nvmrc file
+        uses: actions/setup-node@v3
+        id: setup-node
         with:
-          node-version: 16.x
+          node-version-file: ".nvmrc"
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install
 
       - name: Rebuild the dist/ directory
-        run: npm run prepare
+        run: pnpm prepare
 
       - name: Compare the expected and actual dist/ directories
         run: |

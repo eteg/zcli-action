@@ -1,17 +1,13 @@
 name: zcli-action
 description: Github Action to deploy Zendesk Apps using ZCLI.
 inputs:
-  env:
-    description: "Environment"
-    required: true
-<<<<<<< HEAD
-    default: "dev"
-  path:
-    description: "Path to dist directory"
+  PATH:
+    description: Path to the app dist directory.
     required: true
     default: "apps/zendesk/dist"
-=======
->>>>>>> v1.1.2
+  ENVIRONMENT:
+    description: "Environment"
+    default: ${{github.ref_name == 'main' && 'production' || 'staging'}}
 runs:
   using: "node16"
   main: "dist/index.js"
