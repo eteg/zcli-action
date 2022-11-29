@@ -37,6 +37,9 @@ jobs:
           version: 7
           run_install: false
 
+      - name: Install dependencies
+        run: pnpm install
+
       - name: Rebuild the dist/ directory
         run: pnpm prepare
 
