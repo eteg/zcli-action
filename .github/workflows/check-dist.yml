@@ -21,15 +21,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout the code
+        uses: actions/checkout@v3
 
-      - name: Set Node.js 16.x
+      - name: Setup node version from .nvmrc file
         uses: actions/setup-node@v3
+        id: setup-node
         with:
-          node-version: 16.x
+          node-version-file: ".nvmrc"
 
-      - name: Install dependencies
-        run: pnpm install
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
 
       - name: Rebuild the dist/ directory
         run: pnpm run prepare
