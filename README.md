@@ -20,16 +20,6 @@ Install the dependencies
 pnpm install
 ```
 
-Run the tests :heavy_check_mark:
-
-```bash
-$ pnpm test
-
- PASS  ./index.test.js
-  ✓ test runs (95ms)
-...
-```
-
 ## :repeat: Change the Action
 
 The action.yml defines the inputs and output for your action.
