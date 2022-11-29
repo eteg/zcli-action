@@ -4,12 +4,12 @@ Github Action to deploy Zendesk Apps using ZCLI.
 
 ## :clipboard: Table of contents
 
-- [Installation]()
-- [Usage]()
-- [Change the Action]()
-- [Change the Code]()
-- [Package for distribution]()
-- [Create a release branch]()
+- [Installation](#package-installation)
+- [Change the Action](#repeat-change-the-action)
+- [Change the Code](#keyboard-change-the-code)
+- [Usage](#rocket-usage)
+- [Package for distribution](#envelope-package-for-distribution)
+- [Create a release branch](#exploding_head-create-a-release-branch)
 - [License](#scroll-license)
 
 ## :package: Installation
@@ -17,13 +17,13 @@ Github Action to deploy Zendesk Apps using ZCLI.
 Install the dependencies
 
 ```bash
-yarn install
+pnpm install
 ```
 
 Run the tests :heavy_check_mark:
 
 ```bash
-$ yarn test
+$ pnpm test
 
  PASS  ./index.test.js
   ✓ test runs (95ms)
@@ -67,9 +67,11 @@ uses: eteg/zcli-action@v1
 This is a complete example of the action usage for development purposes.:
 
 ```yaml
-name: zcli-action
+name: CD Zendesk
 
 on:
+  # Enables manual invocation of the workflow from the github action user interface
+  workflow_dispatch:
   pull_request:
     branches:
       - main
@@ -78,31 +80,40 @@ on:
 
 jobs:
   deploy:
-    if: github.event.pull_request.merged == true
-
     runs-on: ubuntu-latest
-
-    environment: ${{github.ref_name == 'main' && 'production' || 'staging'}
+    environment: ${{github.ref_name == 'main' && 'production' || 'staging'}}
 
     strategy:
       matrix:
         node-version: [16.x]
 
+    env:
+      ZENDESK_SUBDOMAIN: ${{ secrets.ZENDESK_SUBDOMAIN }}
+      ZENDESK_EMAIL: ${{ secrets.ZENDESK_EMAIL }}
+      ZENDESK_API_TOKEN: ${{ secrets.ZENDESK_API_TOKEN }}
+
     steps:
-      - name: Setup Checkout
+      - name: Checkout the code
         uses: actions/checkout@v3
 
-      - name: Setup Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: npm
-          cache-dependency-path: "./yarn.lock"
+          version: 7
+          run_install: false
+
+      - name: Setup node version from .nvmrc file
+        uses: actions/setup-node@v3
+        id: setup-node
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
 
       - name: Setup ZCLI
-        uses: eteg/zcli-action@v1.1.2
+        uses: eteg/zcli-action@v2
         with:
-          env: ${{github.ref_name == 'main' && 'production' || 'staging'}
+          PATH: "dist"
 ```
 
 > NOTE: You must setup env variables in `Settings > Environments`
@@ -116,7 +127,7 @@ Actions are run from GitHub repos. Packaging the action will create a packaged a
 Run prepare for distribution
 
 ```bash
-yarn run prepare
+pnpm prepare
 ```
 
 Since the packaged index.js is run from the dist folder.
