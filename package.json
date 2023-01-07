@@ -1,6 +1,6 @@
 {
   "name": "zcli-action",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Github Action to deploy Zendesk Apps using ZCLI.",
   "main": "index.js",
   "scripts": {
@@ -11,8 +11,9 @@
   },
   "engines": {
     "node": ">=16",
-    "pnpm": ">=7"
+    "yarn": ">=1.22.17"
   },
+  "packageManager": "yarn@1.22.17",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eteg/zcli-action.git"

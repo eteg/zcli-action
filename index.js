@@ -32,12 +32,12 @@ async function run() {
     
     await exec.exec(`echo 🐧 Setting up the environment...`);
 
-    await exec.exec('pnpm add @zendesk/zcli -g');
-    await exec.exec('pnpm add typescript -g');
+    await exec.exec('yarn add @zendesk/zcli -g');
+    await exec.exec('yarn add typescript -g');
    
     await exec.exec(`echo 🔎 Building & Validating...`);
-    await exec.exec('pnpm install');
-    await exec.exec(`pnpm build`);
+    await exec.exec('yarn install');
+    await exec.exec(`yarn build`);
 
     const exists = await fileExists(`${path}/zcli.apps.config.json`)
 

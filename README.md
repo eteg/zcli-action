@@ -17,7 +17,7 @@ Github Action to deploy Zendesk Apps using ZCLI.
 Install the dependencies
 
 ```bash
-pnpm install
+yarn install
 ```
 
 ## :repeat: Change the Action
@@ -86,22 +86,15 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
 
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: 7
-          run_install: false
-
       - name: Setup node version from .nvmrc file
         uses: actions/setup-node@v3
         id: setup-node
         with:
           node-version-file: ".nvmrc"
-          cache: "pnpm"
+          cache: "yarn"
 
       - name: Setup ZCLI
-        uses: eteg/zcli-action@v2
+        uses: eteg/zcli-action@v3
         with:
           PATH: "dist"
 ```
@@ -117,7 +110,7 @@ Actions are run from GitHub repos. Packaging the action will create a packaged a
 Run prepare for distribution
 
 ```bash
-pnpm prepare
+yarn prepare
 ```
 
 Since the packaged index.js is run from the dist folder.
