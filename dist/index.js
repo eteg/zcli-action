@@ -11004,7 +11004,7 @@ async function run() {
     await exec.exec(`echo 🔎 The name of your branch is ${ref} and your repository is ${repository.name}.`);
     
     await exec.exec(`echo 🐧 Setting up the dependencies...`);
-    await exec.exec('yarn add @zendesk/zcli@v1.0.0-beta.24 -g');
+    await exec.exec('yarn add @zendesk/zcli --global --force');
     await exec.exec('yarn add typescript -g');
    
     await exec.exec(`echo 🔎 Building & Validating...`);
