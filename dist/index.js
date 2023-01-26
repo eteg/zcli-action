@@ -11003,12 +11003,16 @@ async function run() {
     await exec.exec(`echo 🖥️ Job was automatically triggered by ${eventName} event`);
     await exec.exec(`echo 🔎 The name of your branch is ${ref} and your repository is ${repository.name}.`);
     
-    await exec.exec(`echo 🐧 Installing dependencies & Building...`);
+    await exec.exec(`echo 🐧 Setting up the dependencies...`);
+    await exec.exec('yarn add @zendesk/zcli@v1.0.0-beta.24 -g');
+    await exec.exec('yarn add typescript -g');
+   
+    await exec.exec(`echo 🔎 Building & Validating...`);
     await exec.exec('yarn install');
     await exec.exec(`yarn build`);
     
     await exec.exec(`echo 🚀 Updating an existing application...`);
-    await exec.exec(`yarn zcli apps:update ${path}`);
+    await exec.exec(`zcli apps:update ${path}`);
     
     exec.exec(`echo 🎉 Job has been finished`);
 
