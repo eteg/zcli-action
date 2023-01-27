@@ -11004,15 +11004,14 @@ async function run() {
     await exec.exec(`echo 🔎 The name of your branch is ${ref} and your repository is ${repository.name}.`);
     
     await exec.exec(`echo 🐧 Setting up the dependencies...`);
-    await exec.exec('yarn add @zendesk/zcli --global --force');
-    await exec.exec('yarn add typescript -g');
-   
-    await exec.exec(`echo 🔎 Building & Validating...`);
     await exec.exec('yarn install');
+
+    await exec.exec(`echo 🔎 Building, Packaging and Validating...`);
     await exec.exec(`yarn build`);
+    await exec.exec(`yarn zcli:package ${path}`);
     
     await exec.exec(`echo 🚀 Updating an existing application...`);
-    await exec.exec(`zcli apps:update ${path}`);
+    await exec.exec(`yarn zcli:update ${path}`);
     
     exec.exec(`echo 🎉 Job has been finished`);
 
