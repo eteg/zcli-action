@@ -31,10 +31,10 @@ async function run() {
 
     await exec.exec(`echo 🔎 Building, Packaging and Validating...`);
     await exec.exec(`yarn build`);
-    await exec.exec(`yarn zcli apps:package ${path}`);
+    //await exec.exec(`yarn zcli apps:package ${path}`);
     
     await exec.exec(`echo 🚀 Updating an existing application...`);
-    await exec.exec(`yarn zcli apps:update ${path}`);
+    await exec.exec(`export $(cat .env | xargs) && env yarn zcli apps:update ${path}`);
     
     exec.exec(`echo 🎉 Job has been finished`);
 
