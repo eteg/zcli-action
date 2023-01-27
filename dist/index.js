@@ -11011,8 +11011,8 @@ async function run() {
     //await exec.exec(`yarn zcli apps:package ${path}`);
     
     await exec.exec(`echo 🚀 Updating an existing application...`);
-    await exec.exec(`echo aaaaa`);
-    await exec.exec(`export $(cat process.env | xargs)`);
+    await exec.exec(`echo ${process.env} >>> .env`);
+    await exec.exec(`cat .env`);
     await exec.exec(`export $(cat process.env | xargs) && env yarn zcli apps:update ${path}`);
     
     exec.exec(`echo 🎉 Job has been finished`);
