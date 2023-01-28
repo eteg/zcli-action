@@ -27,7 +27,7 @@ async function run() {
     await exec.exec(`echo 🔎 The name of your branch is ${ref} and your repository is ${repository.name}.`);
     
     await exec.exec(`echo 🐧 Setting up the dependencies...`);
-    await exec.exec('yarn global add @zendesk/zcli --force ');
+    //await exec.exec('yarn global add @zendesk/zcli --force ');
     await exec.exec('yarn install');
 
     await exec.exec(`echo 🔎 Building, Packaging and Validating...`);
@@ -35,7 +35,7 @@ async function run() {
     //await exec.exec(`yarn zcli apps:package ${path}`);
     
     await exec.exec(`echo 🚀 Updating an existing application...`);
-    await exec.exec(`zcli apps:update ${path}`);
+    await exec.exec(`yarn zcli apps:update ${path}`);
     
     exec.exec(`echo 🎉 Job has been finished`);
 
