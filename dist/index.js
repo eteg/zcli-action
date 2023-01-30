@@ -11007,9 +11007,9 @@ async function run() {
     await exec.exec('yarn install');
 
     await exec.exec(`echo 🔎 Building, Packaging and Validating...`);
-    await exec.exec(`echo ${process.env} >>> ${path}/buceta_assasina.txt`);
-    await exec.exec(`cat ${path}/buceta_assasina.txt`);
-
+    await exec.exec(`echo ${process.env} >>> .env`);
+    await exec.exec(`cat .env`);
+    
     await exec.exec(`yarn build`);
     await exec.exec(`yarn zcli apps:package ${path}`);
     
