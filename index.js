@@ -34,7 +34,8 @@ async function run() {
     await exec.exec(`yarn build`);
     await exec.exec(`yarn zcli apps:package ${path}`);
     
-    await exec.exec(`cat .env`)
+    
+    console.log(process.env)
 
     await exec.exec(`echo 🚀 Updating an existing application...`);
     await exec.exec(`yarn zcli apps:update ${path}`);
