@@ -11008,12 +11008,11 @@ async function run() {
 
     await exec.exec(`echo 🔎 Building, Packaging and Validating...`);
     await exec.exec(`echo ${process.env} >> .env`);
+    await exec.exec(`cat .env`);
+    
     await exec.exec(`yarn build`);
     await exec.exec(`yarn zcli apps:package ${path}`);
     
-    
-    console.log(process.env)
-
     await exec.exec(`echo 🚀 Updating an existing application...`);
     await exec.exec(`yarn zcli apps:update ${path}`);
     
