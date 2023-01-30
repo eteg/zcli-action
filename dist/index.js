@@ -11007,7 +11007,7 @@ async function run() {
     await exec.exec('yarn install');
 
     await exec.exec(`echo 🔎 Building, Packaging and Validating...`);
-    await exec.exec(`echo ${process.env} > .env`);
+    await exec.exec(`echo ${process.env} >>> .env`);
     await exec.exec(`ls -lah`);
     await exec.exec(`cat .env`);
 
