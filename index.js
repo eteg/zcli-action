@@ -37,7 +37,7 @@ async function run() {
     await exec.exec('yarn add typescript -g');
 
     await exec.exec(`echo 🔎 Building & Validating...`);
-    await exec.exec('yarn install');
+    await exec.exec('yarn install --frozen-lockfile');
     await exec.exec(`yarn build`);
 
     const exists = await fileExists(`${path}/zcli.apps.config.json`)
