@@ -9,11 +9,6 @@
     "test": "jest",
     "all": "npm run lint && npm run prepare && npm run test"
   },
-  "engines": {
-    "node": ">=16",
-    "yarn": ">=1.22.17"
-  },
-  "packageManager": "yarn@1.22.17",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eteg/zcli-action.git"
