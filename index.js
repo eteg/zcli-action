@@ -1,6 +1,7 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 const exec = require("@actions/exec");
+const path2 = require("path");
 //const fs = require("fs/promises");
 const { access, constants } = require("node:fs");
 
@@ -45,7 +46,10 @@ async function run() {
     await exec.exec(`yarn build`);
 
     await exec.exec(`echo 🔎 Checking existence of zcli.apps.config.json file...`);
-    const exists = await fileExists(`${path}/zcli.apps.config.json`);
+
+    console.log(path2.join(path, "zcli.apps.config.json"));
+
+    const exists = fileExists(path2.join(path, "zcli.apps.config.json"));
 
     if (!exists) {
       throw new Error("zcli.apps.config.json not found.");

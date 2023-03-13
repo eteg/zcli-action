@@ -10986,6 +10986,7 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 const exec = __nccwpck_require__(1514);
+const path2 = __nccwpck_require__(1017);
 //const fs = require("fs/promises");
 const { access, constants } = __nccwpck_require__(7561);
 
@@ -11030,7 +11031,10 @@ async function run() {
     await exec.exec(`yarn build`);
 
     await exec.exec(`echo 🔎 Checking existence of zcli.apps.config.json file...`);
-    const exists = await fileExists(`${path}/zcli.apps.config.json`);
+
+    console.log(path2.join(path, "zcli.apps.config.json"));
+
+    const exists = fileExists(path2.join(path, "zcli.apps.config.json"));
 
     if (!exists) {
       throw new Error("zcli.apps.config.json not found.");
