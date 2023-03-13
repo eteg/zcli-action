@@ -11030,9 +11030,9 @@ async function run() {
     await exec.exec("yarn install --frozen-lockfile");
     await exec.exec(`yarn build`);
 
-    await exec.exec(`echo 🔎 Checking existence of zcli.apps.config.json file...`);
+    await exec.exec(`echo 🔎 ls -la`);
 
-    console.log(path2.join(path, "zcli.apps.config.json"));
+    await exec.exec(`echo 🔎 Checking existence of zcli.apps.config.json file...`);
 
     const exists = fileExists(path2.join(path, "zcli.apps.config.json"));
 
