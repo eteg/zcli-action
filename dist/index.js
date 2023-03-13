@@ -11006,7 +11006,7 @@ async function run() {
       throw new Error("Environment input must be provided (production or staging).");
     }
 
-    await exec.exec(`echo 💡 This job started at ${dateTime}`);
+    await exec.exec(`echo 💡 This job started at ${dateTime} and will run on the path: ${path}`);
     await exec.exec(`echo 🖥️ Job was automatically triggered by ${eventName} event`);
     await exec.exec(`echo 🔎 The name of your branch is ${ref} and your repository is ${repository.name}.`);
 
