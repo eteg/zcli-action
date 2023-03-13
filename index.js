@@ -30,7 +30,7 @@ async function run() {
     await exec.exec("npm install yarn@1.22.19 --location=global");
     await exec.exec("echo 🖥️ Successfully added yarn");
 
-    await exec.exec("yarn add @zendesk/zcli");
+    await exec.exec("yarn add @zendesk/zcli --ignore-workspace-root-check");
 
     await exec.exec("yarn add typescript -g");
 
