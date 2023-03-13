@@ -11030,7 +11030,7 @@ async function run() {
     await exec.exec("yarn install --frozen-lockfile");
     await exec.exec(`yarn build`);
 
-    await exec.exec(`echo 🔎 ls -la`);
+    await exec.exec(`echo 🔎 ls -la ${path}`);
 
     await exec.exec(`echo 🔎 Checking existence of zcli.apps.config.json file...`);
 
