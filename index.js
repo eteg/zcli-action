@@ -1,10 +1,17 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 const exec = require("@actions/exec");
-const fs = require("fs/promises");
+//const fs = require("fs/promises");
+const { access, constants } = require("node:fs");
 
 // eslint-disable-next-line no-unused-vars
-const fileExists = async (path) => !!(await fs.stat(path).catch((err) => false));
+//const fileExists = async (path) => !!(await fs.stat(path).catch((err) => false));
+function fileExists(path) {
+  access(path, constants.F_OK, (err) => {
+    if (err) return false;
+    else return true;
+  });
+}
 
 async function run() {
   try {
@@ -37,6 +44,7 @@ async function run() {
     await exec.exec("yarn install --frozen-lockfile");
     await exec.exec(`yarn build`);
 
+    await exec.exec(`echo 🔎 Checking existence of zcli.apps.config.json file...`);
     const exists = await fileExists(`${path}/zcli.apps.config.json`);
 
     if (!exists) {

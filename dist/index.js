@@ -10822,14 +10822,6 @@ module.exports = require("fs");
 
 /***/ }),
 
-/***/ 3292:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("fs/promises");
-
-/***/ }),
-
 /***/ 3685:
 /***/ ((module) => {
 
@@ -10851,6 +10843,14 @@ module.exports = require("https");
 
 "use strict";
 module.exports = require("net");
+
+/***/ }),
+
+/***/ 7561:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:fs");
 
 /***/ }),
 
@@ -10986,10 +10986,17 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 const exec = __nccwpck_require__(1514);
-const fs = __nccwpck_require__(3292);
+//const fs = require("fs/promises");
+const { access, constants } = __nccwpck_require__(7561);
 
 // eslint-disable-next-line no-unused-vars
-const fileExists = async (path) => !!(await fs.stat(path).catch((err) => false));
+//const fileExists = async (path) => !!(await fs.stat(path).catch((err) => false));
+function fileExists(path) {
+  access(path, constants.F_OK, (err) => {
+    if (err) return false;
+    else return true;
+  });
+}
 
 async function run() {
   try {
@@ -11022,6 +11029,7 @@ async function run() {
     await exec.exec("yarn install --frozen-lockfile");
     await exec.exec(`yarn build`);
 
+    await exec.exec(`echo 🔎 Checking existence of zcli.apps.config.json file...`);
     const exists = await fileExists(`${path}/zcli.apps.config.json`);
 
     if (!exists) {
