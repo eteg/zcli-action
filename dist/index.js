@@ -10846,14 +10846,6 @@ module.exports = require("net");
 
 /***/ }),
 
-/***/ 7561:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("node:fs");
-
-/***/ }),
-
 /***/ 2037:
 /***/ ((module) => {
 
@@ -10986,16 +10978,30 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 const exec = __nccwpck_require__(1514);
-const path2 = __nccwpck_require__(1017);
-//const fs = require("fs/promises");
-const { access, constants } = __nccwpck_require__(7561);
-
+const path = __nccwpck_require__(1017);
+const fs = __nccwpck_require__(7147);
 // eslint-disable-next-line no-unused-vars
-//const fileExists = async (path) => !!(await fs.stat(path).catch((err) => false));
-function fileExists(path) {
-  access(path, constants.F_OK, (err) => {
-    if (err) return false;
-    else return true;
+
+function fileExists(appPath, token) {
+  fs.access(appPath, fs.constants.F_OK, (err) => {
+    if (err) {
+      console.log("File zcli.apps.config.json not found. Creating a new one...");
+
+      const objectParams = new Object();
+      objectParams.parameters = new Object();
+      objectParams.parameters.token = token;
+
+      fs.writeFileSync("zcli.apps.config.json", JSON.stringify(objectParams));
+
+      //Test if file was created
+      fs.access(appPath, fs.constants.F_OK, (err) => {
+        console.log(
+          err ? "File zcli.apps.config.json not created." : "File zcli.apps.config.json created successfully."
+        );
+        if (err) return false;
+      });
+    }
+    return true;
   });
 }
 
@@ -11008,13 +11014,14 @@ async function run() {
     const { repository } = github.context.payload;
 
     const environment = core.getInput("ENVIRONMENT");
-    const path = core.getInput("PATH");
+    const appPath = core.getInput("PATH");
+    const appToken = core.getInput("TOKEN");
 
     if (environment !== "production" && environment !== "staging") {
       throw new Error("Environment input must be provided (production or staging).");
     }
 
-    await exec.exec(`echo 💡 This job started at ${dateTime} and will run on the path: ${path}`);
+    await exec.exec(`echo 💡 This job started at ${dateTime} and will run on the path: ${appPath}`);
     await exec.exec(`echo 🖥️ Job was automatically triggered by ${eventName} event`);
     await exec.exec(`echo 🔎 The name of your branch is ${ref} and your repository is ${repository.name}.`);
 
@@ -11030,18 +11037,16 @@ async function run() {
     await exec.exec("yarn install --frozen-lockfile");
     await exec.exec(`yarn build`);
 
-    await exec.exec(`ls -la ${path}`);
-
     await exec.exec(`echo 🔎 Checking existence of zcli.apps.config.json file...`);
 
-    const exists = fileExists(path2.join(path, "zcli.apps.config.json"));
+    const exists = fileExists(path.join(appPath, "zcli.apps.config.json"), appToken);
 
     if (!exists) {
       throw new Error("zcli.apps.config.json not found.");
     }
 
     await exec.exec(`echo 🚀 Updating an existing application...`);
-    await exec.exec(`zcli apps:update ${path}`);
+    await exec.exec(`zcli apps:update ${appPath}`);
 
     exec.exec(`echo 🎉 Job has been finished`);
   } catch (error) {
