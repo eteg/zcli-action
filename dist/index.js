@@ -10983,7 +10983,7 @@ const fs = __nccwpck_require__(7147);
 // eslint-disable-next-line no-unused-vars
 
 function fileExists(appPath) {
-  fs.access(appPath, fs.constants.F_OK, (err) => {
+  fs.accessSync(appPath, fs.constants.F_OK, (err) => {
     if (err) return false;
     else true;
   });
@@ -10999,7 +10999,7 @@ function createFile(appPath, token) {
   fs.writeFileSync("zcli.apps.config.json", JSON.stringify(objectParams));
 
   //Test if file was created
-  fs.access(appPath, fs.constants.F_OK, (err) => {
+  fs.accessSync(appPath, fs.constants.F_OK, (err) => {
     console.log(err ? "File zcli.apps.config.json not created." : "File zcli.apps.config.json created successfully.");
     if (err) return false;
     else true;
