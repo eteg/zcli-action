@@ -10983,6 +10983,7 @@ const fs = __nccwpck_require__(7147);
 // eslint-disable-next-line no-unused-vars
 
 function fileExists(appPath) {
+  console.log(`Checking existence on path: ${appPath}`);
   fs.accessSync(appPath, fs.constants.F_OK, (err) => {
     if (err) return false;
     else true;
