@@ -6,30 +6,24 @@ const fs = require("fs");
 // eslint-disable-next-line no-unused-vars
 
 function fileExists(appPath) {
-  console.log(`Checking existence of: ${appPath}`);
   try {
     fs.accessSync(appPath, fs.constants.F_OK);
     console.log(`File ${appPath} exists.`);
+    return true;
   } catch (error) {
     console.log(`File ${appPath} does not exist.`);
+    return false;
   }
 }
 
 function createFile(appPath, token) {
-  console.log(`Trying to creating file: ${appPath}`);
+  console.log(`Trying to creating on path: ${appPath}`);
 
   const objectParams = new Object();
   objectParams.parameters = new Object();
   objectParams.parameters.token = token;
 
   fs.writeFileSync("zcli.apps.config.json", JSON.stringify(objectParams));
-
-  //Test if file was created
-  fs.accessSync(appPath, fs.constants.F_OK, (err) => {
-    console.log(err ? "File zcli.apps.config.json not created." : "File zcli.apps.config.json created successfully.");
-    if (err) return false;
-    else true;
-  });
 }
 
 async function run() {
