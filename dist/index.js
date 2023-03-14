@@ -10985,7 +10985,7 @@ const fs = __nccwpck_require__(7147);
 function fileExists(appPath, token) {
   fs.access(appPath, fs.constants.F_OK, (err) => {
     if (err) {
-      console.log("File zcli.apps.config.json not found. Creating a new one...");
+      console.log("File zcli.apps.config.json not found. Trying to creating a new one...");
 
       const objectParams = new Object();
       objectParams.parameters = new Object();
