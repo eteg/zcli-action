@@ -66,8 +66,13 @@ async function run() {
     const exists = fileExists(path.join(appPath, "zcli.apps.config.json"), appToken);
 
     if (!exists) {
-      createFile();
-      throw new Error("zcli.apps.config.json not found.");
+      createFile(appPath, appToken);
+    }
+
+    const isFileCreated = fileExists(path.join(appPath, "zcli.apps.config.json"), appToken);
+
+    if (!isFileCreated) {
+      throw new Error("File zcli.apps.config.json not found and can't be created.");
     }
 
     await exec.exec(`echo 🚀 Updating an existing application...`);
