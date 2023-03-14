@@ -10982,26 +10982,27 @@ const path = __nccwpck_require__(1017);
 const fs = __nccwpck_require__(7147);
 // eslint-disable-next-line no-unused-vars
 
-function fileExists(appPath, token) {
+function fileExists(appPath) {
   fs.access(appPath, fs.constants.F_OK, (err) => {
-    if (err) {
-      console.log("File zcli.apps.config.json not found. Trying to creating a new one...");
+    if (err) return false;
+    else true;
+  });
+}
 
-      const objectParams = new Object();
-      objectParams.parameters = new Object();
-      objectParams.parameters.token = token;
+function createFile(appPath, token) {
+  console.log("File zcli.apps.config.json not found. Trying to creating a new one...");
 
-      fs.writeFileSync("zcli.apps.config.json", JSON.stringify(objectParams));
+  const objectParams = new Object();
+  objectParams.parameters = new Object();
+  objectParams.parameters.token = token;
 
-      //Test if file was created
-      fs.access(appPath, fs.constants.F_OK, (err) => {
-        console.log(
-          err ? "File zcli.apps.config.json not created." : "File zcli.apps.config.json created successfully."
-        );
-        if (err) return false;
-      });
-    }
-    return true;
+  fs.writeFileSync("zcli.apps.config.json", JSON.stringify(objectParams));
+
+  //Test if file was created
+  fs.access(appPath, fs.constants.F_OK, (err) => {
+    console.log(err ? "File zcli.apps.config.json not created." : "File zcli.apps.config.json created successfully.");
+    if (err) return false;
+    else true;
   });
 }
 
@@ -11042,6 +11043,7 @@ async function run() {
     const exists = fileExists(path.join(appPath, "zcli.apps.config.json"), appToken);
 
     if (!exists) {
+      createFile();
       throw new Error("zcli.apps.config.json not found.");
     }
 
