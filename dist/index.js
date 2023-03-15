@@ -10982,39 +10982,32 @@ const fs = __nccwpck_require__(7147);
 // eslint-disable-next-line no-unused-vars
 
 function checkOrCreateFile(appPath, appToken) {
-  fs.access(`${appPath}/zcli.apps.config.json`, fs.constants.F_OK, (err) => {
-    if (err) {
-      console.log(`File ${appPath}/zcli.apps.config.json does not exist. Trying to create it...`);
-
-      const params = JSON.stringify({
-        parameters: {
-          token: appToken,
-        },
-      });
-
-      try {
-        fs.writeFileSync(`${appPath}/zcli.apps.config.json`, params);
-        console.log(`File ${appPath}/zcli.apps.config.json created.`);
-
-        //Check if file was created
-        fs.access(`${appPath}/zcli.apps.config.json`, fs.constants.F_OK, (err) => {
-          if (err) {
-            console.log(`File ${appPath}/zcli.apps.config.json does not exist.`);
-            return false;
-          } else {
-            console.log(`File ${appPath}/zcli.apps.config.json exists.`);
-            return true;
-          }
-        });
-      } catch (error) {
-        console.log(`Error while creating file: ${error}`);
-        return false;
-      }
-    }
-
-    console.log(`File ${appPath}/zcli.apps.config.json exists.`);
+  try {
+    // If file dont exist, it will throw an error
+    fs.accessSync(`${appPath}/zcli.apps.config.json`, fs.constants.F_OK);
     return true;
-  });
+  } catch (error) {
+    console.log(`File ${appPath}/zcli.apps.config.json does not exist. Trying to create it...`);
+
+    const params = JSON.stringify({
+      parameters: {
+        token: appToken,
+      },
+    });
+
+    fs.writeFileSync(`${appPath}/zcli.apps.config.json`, params);
+    console.log(`File ${appPath}/zcli.apps.config.json created.`);
+
+    try {
+      //Check if file was created
+      fs.access(`${appPath}/zcli.apps.config.json`, fs.constants.F_OK);
+      console.log(`File ${appPath}/zcli.apps.config.json exists.`);
+      return true;
+    } catch (error) {
+      console.log(`File ${appPath}/zcli.apps.config.json does not exist.`);
+      return false;
+    }
+  }
 }
 
 async function run() {
