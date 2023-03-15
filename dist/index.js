@@ -10978,35 +10978,43 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 const exec = __nccwpck_require__(1514);
-const path = __nccwpck_require__(1017);
 const fs = __nccwpck_require__(7147);
 // eslint-disable-next-line no-unused-vars
 
-function fileExists(appPath) {
-  try {
-    fs.accessSync(appPath, fs.constants.F_OK);
-    console.log(`File ${appPath} exists.`);
+function checkOrCreateFile(appPath, appToken) {
+  fs.access(`${appPath}/zcli.apps.config.json`, fs.constants.F_OK, (err) => {
+    if (err) {
+      console.log(`File ${appPath}/zcli.apps.config.json does not exist. Trying to create it...`);
+
+      const params = JSON.stringify({
+        parameters: {
+          token: appToken,
+        },
+      });
+
+      try {
+        fs.writeFileSync(`${appPath}/zcli.apps.config.json`, params);
+        console.log(`File ${appPath}/zcli.apps.config.json created.`);
+
+        //Check if file was created
+        fs.access(`${appPath}/zcli.apps.config.json`, fs.constants.F_OK, (err) => {
+          if (err) {
+            console.log(`File ${appPath}/zcli.apps.config.json does not exist.`);
+            return false;
+          } else {
+            console.log(`File ${appPath}/zcli.apps.config.json exists.`);
+            return true;
+          }
+        });
+      } catch (error) {
+        console.log(`Error while creating file: ${error}`);
+        return false;
+      }
+    }
+
+    console.log(`File ${appPath}/zcli.apps.config.json exists.`);
     return true;
-  } catch (error) {
-    console.log(`File ${appPath} does not exist.`);
-    return false;
-  }
-}
-
-function createFile(appPath, token) {
-  console.log(`Trying to creating on path: ${appPath}`);
-
-  const params = JSON.stringify({
-    parameters: {
-      token,
-    },
   });
-
-  try {
-    fs.writeFileSync("zcli.apps.config.json", params);
-  } catch (error) {
-    console.log(`Error while creating file: ${error}`);
-  }
 }
 
 async function run() {
@@ -11043,15 +11051,9 @@ async function run() {
 
     await exec.exec(`echo 🔎 Checking existence of zcli.apps.config.json file...`);
 
-    const exists = fileExists(path.join(appPath, "zcli.apps.config.json"));
+    const fileExists = checkOrCreateFile(appPath, appToken);
 
-    if (!exists) {
-      createFile(appPath, appToken);
-    }
-
-    const isFileCreated = fileExists(path.join(appPath, "zcli.apps.config.json"));
-
-    if (!isFileCreated) {
+    if (!fileExists) {
       throw new Error("File zcli.apps.config.json not found and can't be created.");
     }
 
