@@ -18,12 +18,23 @@ function fileExists(appPath) {
 
 function createFile(appPath, token) {
   console.log(`Trying to creating on path: ${appPath}`);
+  console.log(`Token for this app is: ${token}`);
 
-  const objectParams = new Object();
-  objectParams.parameters = new Object();
-  objectParams.parameters.token = token;
+  //const objectParams = new Object();
+  //objectParams.parameters = new Object();
+  //objectParams.parameters.token = token;
 
-  fs.writeFileSync("zcli.apps.config.json", JSON.stringify(objectParams));
+  const params = {
+    parameters: {
+      token,
+    },
+  };
+
+  try {
+    fs.writeFileSync("zcli.apps.config.json", JSON.stringify(params));
+  } catch (error) {
+    console.log(`Error while creating file: ${error}`);
+  }
 }
 
 async function run() {
