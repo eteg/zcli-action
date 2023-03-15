@@ -59,7 +59,7 @@ async function run() {
 
     await exec.exec("yarn add @zendesk/zcli@v1.0.0-beta.16 -G -W");
 
-    await exec.exec("yarn add typescript");
+    await exec.exec("yarn add typescript -G -W");
 
     await exec.exec(`echo 🔎 Building & Validating...`);
     await exec.exec("yarn install --frozen-lockfile");
