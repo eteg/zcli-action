@@ -11034,7 +11034,7 @@ async function run() {
 
     await exec.exec("npm install yarn@1.22.19 --location=global");
 
-    await exec.exec("npm install @zendesk/zcli@v1.0.0-beta.16 --location=global");
+    await exec.exec("npm install @zendesk/zcli@v1.0.0-beta.32 --location=global");
 
     await exec.exec("npm install typescript --location=global");
 
