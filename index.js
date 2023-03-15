@@ -57,9 +57,9 @@ async function run() {
 
     await exec.exec("npm install yarn@1.22.19 --location=global");
 
-    await exec.exec("yarn add @zendesk/zcli -G ");
+    await exec.exec("yarn add @zendesk/zcli");
 
-    await exec.exec("yarn add typescript -G ");
+    await exec.exec("yarn add typescript");
 
     await exec.exec(`echo 🔎 Building & Validating...`);
     await exec.exec("yarn install --frozen-lockfile");
