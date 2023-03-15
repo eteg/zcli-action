@@ -11000,7 +11000,7 @@ function checkOrCreateFile(appPath, appToken) {
 
     try {
       //Check if file was created
-      fs.access(`${appPath}/zcli.apps.config.json`, fs.constants.F_OK);
+      fs.accessSync(`${appPath}/zcli.apps.config.json`, fs.constants.F_OK);
       console.log(`File ${appPath}/zcli.apps.config.json exists.`);
       return true;
     } catch (error) {
