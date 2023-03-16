@@ -16,6 +16,7 @@ function checkOrCreateFile(appPath, appToken) {
       parameters: {
         token: appToken,
       },
+      app_id: 899123,
     });
 
     fs.writeFileSync(`${appPath}/zcli.apps.config.json`, params);
@@ -57,7 +58,7 @@ async function run() {
 
     await exec.exec("npm install yarn@1.22.19 --location=global");
 
-    await exec.exec("npm install @zendesk/zcli@v1.0.0-beta.32 --location=global");
+    await exec.exec("npm install @zendesk/zcli@v1.0.0-beta.32 --location=global --force");
 
     await exec.exec("npm install typescript --location=global");
 
