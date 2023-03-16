@@ -10981,7 +10981,7 @@ const exec = __nccwpck_require__(1514);
 const fs = __nccwpck_require__(7147);
 // eslint-disable-next-line no-unused-vars
 
-function checkOrCreateFile(appPath, appToken) {
+function checkOrCreateFile(appPath, appToken, appID) {
   try {
     // If file dont exist, it will throw an error
     fs.accessSync(`${appPath}/zcli.apps.config.json`, fs.constants.F_OK);
@@ -10993,7 +10993,7 @@ function checkOrCreateFile(appPath, appToken) {
       parameters: {
         token: appToken,
       },
-      app_id: 900116,
+      app_id: appID,
     });
 
     fs.writeFileSync(`${appPath}/zcli.apps.config.json`, params);
@@ -11022,6 +11022,7 @@ async function run() {
     const environment = core.getInput("ENVIRONMENT");
     const appPath = core.getInput("PATH");
     const appToken = core.getInput("TOKEN");
+    const appID = core.getInput("APP_ID");
 
     if (environment !== "production" && environment !== "staging") {
       throw new Error("Environment input must be provided (production or staging).");
@@ -11045,7 +11046,7 @@ async function run() {
 
     await exec.exec(`echo 🔎 Checking existence of zcli.apps.config.json file...`);
 
-    const fileExists = checkOrCreateFile(appPath, appToken);
+    const fileExists = checkOrCreateFile(appPath, appToken, appID);
 
     if (!fileExists) {
       throw new Error("File zcli.apps.config.json not found and can't be created.");

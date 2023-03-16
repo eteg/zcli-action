@@ -11,6 +11,9 @@ inputs:
   TOKEN:
     description: Access token
     required: true
+  APP_ID:
+    description: App ID from Zendesk
+    required: false
 runs:
   using: "node16"
   main: "dist/index.js"
