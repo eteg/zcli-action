@@ -10993,7 +10993,7 @@ function checkOrCreateFile(appPath, appToken) {
       parameters: {
         token: appToken,
       },
-      app_id: 899123,
+      app_id: 900116,
     });
 
     fs.writeFileSync(`${appPath}/zcli.apps.config.json`, params);
